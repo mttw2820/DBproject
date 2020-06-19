@@ -18,7 +18,9 @@
 	    	System.err.println("SQLException: " + ex.getMessage());
    	 	}
 		try{
-			sql = "select c_num,c_div,c_title,c_grade from class where c_num not in (select en_cNum from enroll where en_sNum='" + session_id + "') order by c_num, c_div";
+			String dateConSql = "en_year = Date2EnrollYear(SYSDATE) AND en_semester = Date2EnrollSemester(SYSDATE)";
+			String subsql = "SELECT en_cNum FROM enroll WHERE en_sNum = '" + session_id + "' AND " + dateConSql;
+			sql = "SELECT c_num,c_div,c_title,c_grade FROM class WHERE c_num NOT IN (" + subsql + ") order by c_num, c_div";
 	
 			rs = stmt.executeQuery(sql);
 

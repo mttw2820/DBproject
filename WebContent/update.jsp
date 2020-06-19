@@ -23,9 +23,10 @@
 	int appliedGrade = 0;
 	
 	if(userNum == null){ %>
-		<script> alert("로그인 후 사용 가능한 서비스입니다."); </script>
-	<%	response.sendRedirect("login.jsp");
-	 }
+		<script>
+		alert("로그인 후 사용 가능한 서비스입니다."); 
+		location.href = "login.jsp"</script>
+<%	}
 		
 		
 	// get user info from student table

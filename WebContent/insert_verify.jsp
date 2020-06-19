@@ -14,7 +14,7 @@
 	
 	try {
 		Class.forName(driver);
-  	        conn =  DriverManager.getConnection (url, user, password);
+  	    conn =  DriverManager.getConnection (url, user, password);
     } catch(SQLException ex) {
 	     System.err.println("SQLException: " + ex.getMessage());
     }

@@ -20,6 +20,6 @@
 		<td align="center"> 로그인한 후 사용하세요.</td>
 	</tr>
 <% } %>
-</table> 
+</table>
 </body>
 </html>
