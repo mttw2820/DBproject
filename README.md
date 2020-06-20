@@ -12,9 +12,9 @@ CREATE TABLE STUDENT (
 	CONSTRAINT STUDENT_PK PRIMARY KEY(s_num)
 );
 
-INSERT INTO STUDENT (s_num, s_pwd, s_total_grade, s_name) VALUES ('1111111', '123', '고은서');
-INSERT INTO STUDENT (s_num, s_pwd, s_total_grade, s_name) VALUES ('1111112', '124', '이수현');
-INSERT INTO STUDENT (s_num, s_pwd, s_total_grade, s_name) VALUES ('1111113', '125', '조혜민');
+INSERT INTO STUDENT (s_num, s_pwd, s_total_grade, s_name) VALUES ('1111111', '1111', '고은서');
+INSERT INTO STUDENT (s_num, s_pwd, s_total_grade, s_name) VALUES ('1111112', '2222', '이수현');
+INSERT INTO STUDENT (s_num, s_pwd, s_total_grade, s_name) VALUES ('1111113', '3333', '조혜민');
 ```
 
 ### CLASS (초기 분반 최대인원은 모두 3명)
