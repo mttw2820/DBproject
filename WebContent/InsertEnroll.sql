@@ -19,14 +19,20 @@ IS
 	nCnt NUMBER;
 	nTeachMax NUMBER;
 	check_Collide NUMBER;
-	/* 커서 */
+	/* 파라미터 있는 커서 */
 	CURSOR enroll_cursor(enYear enroll.en_year%TYPE, enSem enroll.en_semester%TYPE) IS
 		SELECT *
 		FROM enroll
 		WHERE en_sNUM = sStudentID and en_year = enYear and en_semester = enSem;
-	
+	/* 파라미터 없는 커서 */
+	CURSOR calc_unitsum IS
+		SELECT e.en_sNum, c.c_grade
+		FROM class c, enroll e
+		WHERE e.en_year = nYear and e.en_semester = nSemester and e.en_cNum = c.c_num and e.en_cDiv = c.c_div;
+
 BEGIN
 	result := '';
+	nSumCourseUnit := 0;
 	DBMS_OUTPUT.put_line('#');
 	DBMS_OUTPUT.put_line(sStudentId || '님이 과목번호 ' || sCourseId || ', 분반' || TO_CHAR(nCourseIdNo) || '의 수강 등록을 요청하였습니다.');
 	
@@ -35,10 +41,11 @@ BEGIN
 	nSemester := Date2EnrollSemester(SYSDATE);
 
 	/* 에러 처리 1: 최대학점 초과 여부 */
-	SELECT SUM(c.c_grade)
-	INTO nSumCourseUnit
-	FROM class c, enroll e
-	WHERE e.en_sNum = sStudentId and e.en_year = nYear and e.en_semester = nSemester and e.en_cNum = c.c_num and e.en_cDiv = c.c_div;
+	FOR grade_list IN calc_unitsum LOOP
+		IF (grade_list.en_sNum = sStudentId) THEN
+			nSumCourseUnit := nSumCourseUnit + grade_list.c_grade;
+		END IF;	
+	END LOOP;
 
 	SELECT c_grade
 	INTO nCourseUnit
@@ -108,4 +115,3 @@ EXCEPTION
 		result := SQLCODE;
 	END;
 /
-	
