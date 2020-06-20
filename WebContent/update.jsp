@@ -8,7 +8,6 @@
 <head>
 <meta charset="EUC-KR">
 <title>수강신청 사용자 정보 수정</title>
-
 </head>
 
 <body>
@@ -20,11 +19,13 @@
 	String userNum = session_id;
 	String userPWD = "";
 	String userName = "";
-	
+	String userEmail = null;
+	String emailplaceholder = null;
 	if(userNum == null){ %>
 		<script>
 		alert("로그인 후 사용 가능한 서비스입니다."); 
-		location.href = "login.jsp"</script>
+		location.href = "login.jsp"
+		</script>
 <%	}
 		
 		
@@ -40,6 +41,10 @@
 		if(rs.next()){
 			userPWD = rs.getString(2);
 			userName = rs.getString(3);
+			userEmail = rs.getString(4);
+			if(rs.wasNull()){	// 나머지는 not null - null이라면 email이 없는 것
+				emailplaceholder = "email@domain.com";
+			}	
 		}
 	} catch(SQLException e){
 		System.err.println("SQLException: " + e.getMessage());
@@ -65,6 +70,19 @@
 	<tr>
 		<td><div align="center">이름</div></td>
 		<td><div align="center"><%= userName %> </div></td>
+	</tr>
+	<tr>
+		<td><div align="center">이메일</div></td>
+		<td>
+			<div align="center"> 
+				<input type="text" name="userEmail" 
+					<% if(userEmail != null){ %> 
+							value = "<%=userEmail%>"
+					<%  } else { %>
+							placeholder = "<%=emailplaceholder %>"
+					<%	} %> >
+			</div>
+		</td>
 	</tr>
 	<tr>
 		<td><div align="center">비밀번호 확인</div></td>
