@@ -3,6 +3,7 @@
 ### STUDENT
 
 ![images/Untitled.png](images/Untitled.png)
+<br>
 primary key: s_num
 ```sql
 CREATE TABLE STUDENT (
@@ -22,6 +23,7 @@ INSERT INTO STUDENT (s_num, s_pwd, s_total_grade, s_name) VALUES ('1111113', '34
 일주일에 한 번 수업이 있다 가정하고, 시작하는 시간의 시각(hour)과 분(minute), 요일(1 ~ 7)을 저장
 
 ![images/Untitled%201.png](images/Untitled%201.png)
+<br>
 primary key: c_num, c_div, c_year, c_semester
 ```sql
 CREATE TABLE CLASS (
@@ -55,7 +57,9 @@ INSERT INTO CLASS VALUES ('M700', '게임 프로그래밍', 3, 3, 3, 2020, 2, 13
 ### ENROLL
 
 ![images/Untitled%202.png](images/Untitled%202.png)
+<br>
 primary key: en_num
+<br>
 foreign key: en_cNum, en_cDiv, en_year, en_semester
 ```sql
 CREATE TABLE ENROLL (
