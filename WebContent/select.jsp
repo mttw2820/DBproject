@@ -8,8 +8,7 @@
 
 <table width="75%" align="center" border>
 <br>
-<tr><th>과목번호</th><th>분반</th><th>과목명</th><th>강의시간</th>
-      <th>인정학점</th></tr>
+<tr><th>과목번호</th><th>분반</th><th>과목명</th><th>강의시간</th><th>인정학점</th></tr>
 <%
 	
 	String userNum = "";
@@ -33,7 +32,7 @@
 	
 
 	try {
-		Class.forName("oracle.jdbc.driver.OracleDriver");          
+		Class.forName(driver);          
 		conn =  DriverManager.getConnection(url, user, password);
 		stmt = conn.createStatement();		
 		String dateConSql = "en_year = Date2EnrollYear(SYSDATE) AND en_semester = Date2EnrollSemester(SYSDATE)";

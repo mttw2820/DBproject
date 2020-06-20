@@ -42,7 +42,8 @@
 			userPWD = rs.getString(2);
 			userName = rs.getString(3);
 			userEmail = rs.getString(4);
-			if(rs.wasNull()){	// 나머지는 not null - null이라면 email이 없는 것
+			if(rs.wasNull()){	
+				// 나머지는 not null - null이라면 email이 없는 것
 				emailplaceholder = "email@domain.com";
 			}	
 		}
@@ -59,7 +60,7 @@
 
 <table width="75%" align="center" border>
 	<tr bgcolor = "#CAD4F7">
-		<td><div align="center">수강신청 사용자 정보 수정</div></td>
+		<td colspan="2"><div align="center">수강신청 사용자 정보 수정</div></td>
 	</tr>
 	
 	<form method="post" action="update_verify.jsp">
