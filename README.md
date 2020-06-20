@@ -58,6 +58,7 @@ INSERT INTO CLASS VALUES ('M700', '게임 프로그래밍', 3, 3, 3, 2020, 2, 13
 
 ```sql
 CREATE TABLE ENROLL (
+	en_num NUMBER PRIMARY KEY,
 	en_year NUMBER,
 	en_semester NUMBER,
 	en_sNum VARCHAR2(15),
