@@ -4,7 +4,6 @@ IS
   nYear       NUMBER;
   sMonth      VARCHAR2(2);
 BEGIN
-  /* 11월 ~ 4월 : 1학기, 5월 ~ 10월 : 2학기 */
   SELECT TO_NUMBER(TO_CHAR(in_date, 'YYYY')), TO_CHAR(in_date, 'MM') 
   INTO nYear, sMonth 
   FROM DUAL;
