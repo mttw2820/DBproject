@@ -7,40 +7,35 @@ CREATE OR REPLACE FUNCTION doesCollide (
 RETURN NUMBER
 IS
 	checkCollide NUMBER;
-	a_day NUMBER;
-	a_start_h NUMBER;
-	a_start_m NUMBER;
-	a_lec_time NUMBER;
 	a_start_time NUMBER;
 	a_end_time NUMBER;
-	b_day NUMBER;
-	b_start_h NUMBER;
-	b_start_m NUMBER;
-	b_lec_time NUMBER;
 	b_start_time NUMBER;
 	b_end_time NUMBER;
+	class_a class%ROWTYPE;
+	class_b class%ROWTYPE;
 BEGIN
-	/* Ã¹ ¹øÂ° classÀÇ Á¤º¸¸¦ º¯¼ö¿¡ ³Ö±â */
+	/* ì²« ë²ˆì§¸ classì˜ ì •ë³´ë¥¼ ë³€ìˆ˜ì— ë„£ê¸° */
 	SELECT c_day, c_start_h, c_start_m, c_lec_time
-	INTO a_day, a_start_h, a_start_m, a_lec_time
+	INTO class_a.c_day, class_a.c_start_h, class_a.c_start_m, class_a.c_lec_time
 	FROM class
 	WHERE c_num = a_class_id and c_div = a_class_id_no;
-	/* µÎ ¹øÂ° classÀÇ Á¤º¸¸¦ º¯¼ö¿¡ ³Ö±â */
+	
+	/* ë‘ ë²ˆì§¸ classì˜ ì •ë³´ë¥¼ ë³€ìˆ˜ì— ë„£ê¸° */
 	SELECT c_day, c_start_h, c_start_m, c_lec_time
-	INTO b_day, b_start_h, b_start_m, b_lec_time
+	INTO class_b.c_day, class_b.c_start_h, class_b.c_start_m, class_b.c_lec_time
 	FROM class
 	WHERE c_num = b_class_id and c_div = b_class_id_no;
 	
 	checkCollide := 0;
 	
-	/* ºÐÀ¸·Î ¸ðµÎ È¯»êÇÑ ½Ã°£ °è»ê */
-	a_start_time := (60 * a_start_h) + a_start_m;
-	a_end_time := a_start_time + a_lec_time;
-	b_start_time := (60 * b_start_h) + b_start_m;
-	b_end_time := b_start_time + b_lec_time;
+	/* ë¶„ìœ¼ë¡œ ëª¨ë‘ í™˜ì‚°í•œ ì‹œê°„ ê³„ì‚° */
+	a_start_time := (60 * class_a.c_start_h) + class_a.c_start_m;
+	a_end_time := a_start_time + class_a.c_lec_time;
+	b_start_time := (60 * class_b.c_start_h) + class_b.c_start_m;
+	b_end_time := b_start_time + class_b.c_lec_time;
 
-	/* ½Ã°£ÀÌ Ãæµ¹ÇÏ´ÂÁö °Ë»ç */
-	IF (a_day = b_day) THEN
+	/* ì‹œê°„ì´ ì¶©ëŒí•˜ëŠ”ì§€ ê²€ì‚¬ */
+	IF (class_a.c_day = class_b.c_day) THEN
 		IF (a_start_time = b_start_time) THEN
 			checkCollide := 1;
 		ELSIF (a_start_time > b_start_time) THEN
