@@ -2,28 +2,27 @@
 
 ### STUDENT
 
-![CREATE%20TABLE%20e653bb7c28ec499d8ffba3311d3aa171/Untitled.png](CREATE%20TABLE%20e653bb7c28ec499d8ffba3311d3aa171/Untitled.png)
+![images/Untitled.png](images/Untitled.png)
 
 ```sql
 CREATE TABLE STUDENT (
 	s_num VARCHAR2(15),
 	s_pwd VARCHAR2(30) NOT NULL,
-	s_total_grade NUMBER DEFAULT 0,
 	s_name VARCHAR2(10),
 	s_birth DATE,
 	CONSTRAINT STUDENT_PK PRIMARY KEY(s_num)
 );
 
-INSERT INTO STUDENT (s_num, s_pwd, s_total_grade, s_name) VALUES ('1111111', '123', 0, '고은서');
-INSERT INTO STUDENT (s_num, s_pwd, s_total_grade, s_name) VALUES ('1111112', '124', 0, '이수현');
-INSERT INTO STUDENT (s_num, s_pwd, s_total_grade, s_name) VALUES ('1111113', '125', 0, '조혜민');
+INSERT INTO STUDENT (s_num, s_pwd, s_total_grade, s_name) VALUES ('1111111', '123', '고은서');
+INSERT INTO STUDENT (s_num, s_pwd, s_total_grade, s_name) VALUES ('1111112', '124', '이수현');
+INSERT INTO STUDENT (s_num, s_pwd, s_total_grade, s_name) VALUES ('1111113', '125', '조혜민');
 ```
 
 ### CLASS (초기 분반 최대인원은 모두 3명)
 
 일주일에 한 번 수업이 있다 가정하고, 시작하는 시간의 시각(hour)과 분(minute), 요일(1 ~ 7)을 저장
 
-![CREATE%20TABLE%20e653bb7c28ec499d8ffba3311d3aa171/Untitled%201.png](CREATE%20TABLE%20e653bb7c28ec499d8ffba3311d3aa171/Untitled%201.png)
+![images/Untitled%201.png](images/Untitled%201.png)
 
 ```sql
 CREATE TABLE CLASS (
@@ -56,7 +55,7 @@ INSERT INTO CLASS VALUES ('M700', '게임 프로그래밍', 3, 3, 3, 2020, 2, 13
 
 ### ENROLL
 
-![CREATE%20TABLE%20e653bb7c28ec499d8ffba3311d3aa171/Untitled%202.png](CREATE%20TABLE%20e653bb7c28ec499d8ffba3311d3aa171/Untitled%202.png)
+![images/Untitled%202.png](images/Untitled%202.png)
 
 ```sql
 CREATE TABLE ENROLL (
