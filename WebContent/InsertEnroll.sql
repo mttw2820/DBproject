@@ -1,17 +1,17 @@
 CREATE OR REPLACE PROCEDURE InsertEnroll (
-	/* IN parameters: ÇĞ¹ø, °ú¸ñ¹øÈ£, ºĞ¹İ */
+	/* IN parameters: í•™ë²ˆ, ê³¼ëª©ë²ˆí˜¸, ë¶„ë°˜ */
 	sStudentId IN VARCHAR2,
 	sCourseId IN VARCHAR2,
 	nCourseIdNo IN NUMBER,
-	/* OUT parameter: ÀÔ·Â °á°ú ¸Ş½ÃÁö */
+	/* OUT parameter: ì…ë ¥ ê²°ê³¼ ë©”ì‹œì§€ */
 	result OUT VARCHAR2 )
 IS 
-	/* EXCEPTIONµé */
-	too_many_sumCourseUnit EXCEPTION; -- ÃÖ´ëÇĞÁ¡ ÃÊ°ú
-	too_many_courses EXCEPTION; -- ÀÌ¹Ì µî·ÏµÈ °ú¸ñ ½ÅÃ»
-	too_many_students EXCEPTION; -- ¼ö°­½ÅÃ» ÀÎ¿ø ÃÊ°ú
-	duplicate_time EXCEPTION; -- ÀÌ¹Ì µî·ÏµÈ °ú¸ñ Áß Áßº¹µÇ´Â ½Ã°£ Á¸Àç
-	/* ÇÊ¿äÇÑ º¯¼öµé */
+	/* EXCEPTIONë“¤ */
+	too_many_sumCourseUnit EXCEPTION; -- ìµœëŒ€í•™ì  ì´ˆê³¼
+	too_many_courses EXCEPTION; -- ì´ë¯¸ ë“±ë¡ëœ ê³¼ëª© ì‹ ì²­
+	too_many_students EXCEPTION; -- ìˆ˜ê°•ì‹ ì²­ ì¸ì› ì´ˆê³¼
+	duplicate_time EXCEPTION; -- ì´ë¯¸ ë“±ë¡ëœ ê³¼ëª© ì¤‘ ì¤‘ë³µë˜ëŠ” ì‹œê°„ ì¡´ì¬
+	/* í•„ìš”í•œ ë³€ìˆ˜ë“¤ */
 	nYear NUMBER;
 	nSemester NUMBER;
 	nSumCourseUnit NUMBER;
@@ -19,7 +19,7 @@ IS
 	nCnt NUMBER;
 	nTeachMax NUMBER;
 	check_Collide NUMBER;
-	/* Ä¿¼­ */
+	/* ì»¤ì„œ */
 	CURSOR enroll_cursor(enYear enroll.en_year%TYPE, enSem enroll.en_semester%TYPE) IS
 		SELECT *
 		FROM enroll
@@ -28,13 +28,13 @@ IS
 BEGIN
 	result := '';
 	DBMS_OUTPUT.put_line('#');
-	DBMS_OUTPUT.put_line(sStudentId || '´ÔÀÌ °ú¸ñ¹øÈ£ ' || sCourseId || ', ºĞ¹İ' || TO_CHAR(nCourseIdNo) || 'ÀÇ ¼ö°­ µî·ÏÀ» ¿äÃ»ÇÏ¿´½À´Ï´Ù.');
+	DBMS_OUTPUT.put_line(sStudentId || 'ë‹˜ì´ ê³¼ëª©ë²ˆí˜¸ ' || sCourseId || ', ë¶„ë°˜' || TO_CHAR(nCourseIdNo) || 'ì˜ ìˆ˜ê°• ë“±ë¡ì„ ìš”ì²­í•˜ì˜€ìŠµë‹ˆë‹¤.');
 	
-	/* ¼ö°­ ³âµµ¿Í ÇĞ±â ¾Ë¾Æ³»±â */
+	/* ìˆ˜ê°• ë…„ë„ì™€ í•™ê¸° ì•Œì•„ë‚´ê¸° */
 	nYear := Date2EnrollYear(SYSDATE);
 	nSemester := Date2EnrollSemester(SYSDATE);
 
-	/* ¿¡·¯ Ã³¸® 1: ÃÖ´ëÇĞÁ¡ ÃÊ°ú ¿©ºÎ */
+	/* ì—ëŸ¬ ì²˜ë¦¬ 1: ìµœëŒ€í•™ì  ì´ˆê³¼ ì—¬ë¶€ */
 	SELECT SUM(c.c_grade)
 	INTO nSumCourseUnit
 	FROM class c, enroll e
@@ -50,7 +50,7 @@ BEGIN
 		RAISE too_many_sumCourseUnit;
 	END IF;
 
-	/* ¿¡·¯ Ã³¸® 2: µ¿ÀÏÇÑ °ú¸ñ ½ÅÃ» ¿©ºÎ */
+	/* ì—ëŸ¬ ì²˜ë¦¬ 2: ë™ì¼í•œ ê³¼ëª© ì‹ ì²­ ì—¬ë¶€ */
 	SELECT COUNT(*)
 	INTO nCnt
 	FROM enroll
@@ -61,7 +61,7 @@ BEGIN
 		RAISE too_many_courses;
 	END IF;
 
-	/* ¿¡·¯ Ã³¸® 3: ¼ö°­½ÅÃ» ÀÎ¿ø ÃÊ°ú ¿©ºÎ */
+	/* ì—ëŸ¬ ì²˜ë¦¬ 3: ìˆ˜ê°•ì‹ ì²­ ì¸ì› ì´ˆê³¼ ì—¬ë¶€ */
 	SELECT c_max_students
 	INTO nTeachMax
 	FROM class
@@ -77,7 +77,7 @@ BEGIN
 		RAISE too_many_students;
 	END IF;
 	
-	/* ¿¡·¯ Ã³¸® 4: ½ÅÃ»ÇÑ °ú¸ñµé ½Ã°£ Áßº¹ ¿©ºÎ */
+	/* ì—ëŸ¬ ì²˜ë¦¬ 4: ì‹ ì²­í•œ ê³¼ëª©ë“¤ ì‹œê°„ ì¤‘ë³µ ì—¬ë¶€ */
 	check_Collide := 0;
 	FOR enroll_list IN enroll_cursor(nYear, nSemester) LOOP
 		check_Collide := doesCollide(sCourseId, nCourseIdNo, enroll_list.en_cNum, enroll_list.en_cDiv);
@@ -87,26 +87,22 @@ BEGIN
 		END IF;
 	END LOOP;
 	
-	/* ¼ö°­ ½ÅÃ» µî·Ï */
+	/* ìˆ˜ê°• ì‹ ì²­ ë“±ë¡ */
 	INSERT INTO enroll(en_sNum, en_cNum, en_cDiv, en_year, en_semester)
 	VALUES (sStudentId, sCourseId, nCourseIdNo, nYear, nSemester);
 	
-	UPDATE student
-	SET s_total_grade = nSumCourseUnit + nCourseUnit
-	WHERE s_num = sStudentId;
-	
 	COMMIT;
-	result := '¼ö°­½ÅÃ» µî·ÏÀÌ ¿Ï·áµÇ¾ú½À´Ï´Ù.';
+	result := 'ìˆ˜ê°•ì‹ ì²­ ë“±ë¡ì´ ì™„ë£Œë˜ì—ˆìŠµë‹ˆë‹¤.';
 	
 EXCEPTION
 	WHEN too_many_sumCourseUnit THEN
-		result := 'ÃÖ´ëÇĞÁ¡À» ÃÊ°úÇÏ¿´½À´Ï´Ù.';
+		result := 'ìµœëŒ€í•™ì ì„ ì´ˆê³¼í•˜ì˜€ìŠµë‹ˆë‹¤.';
 	WHEN too_many_courses THEN
-		result := 'ÀÌ¹Ì µî·ÏµÈ °ú¸ñÀ» ½ÅÃ»ÇÏ¿´½À´Ï´Ù.';
+		result := 'ì´ë¯¸ ë“±ë¡ëœ ê³¼ëª©ì„ ì‹ ì²­í•˜ì˜€ìŠµë‹ˆë‹¤.';
 	WHEN too_many_students THEN
-		result := '¼ö°­½ÅÃ» ÀÎ¿øÀÌ ÃÊ°úµÇ¾î µî·ÏÀÌ ºÒ°¡´ÉÇÕ´Ï´Ù.';
+		result := 'ìˆ˜ê°•ì‹ ì²­ ì¸ì›ì´ ì´ˆê³¼ë˜ì–´ ë“±ë¡ì´ ë¶ˆê°€ëŠ¥í•©ë‹ˆë‹¤.';
 	WHEN duplicate_time THEN
-		result := 'ÀÌ¹Ì µî·ÏµÈ °ú¸ñ Áß Áßº¹µÇ´Â ½Ã°£ÀÌ Á¸ÀçÇÕ´Ï´Ù.';
+		result := 'ì´ë¯¸ ë“±ë¡ëœ ê³¼ëª© ì¤‘ ì¤‘ë³µë˜ëŠ” ì‹œê°„ì´ ì¡´ì¬í•©ë‹ˆë‹¤.';
 	WHEN OTHERS THEN
 		ROLLBACK;
 		result := SQLCODE;
