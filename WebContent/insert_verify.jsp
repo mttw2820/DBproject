@@ -18,7 +18,7 @@
     } catch(SQLException ex) {
 	     System.err.println("SQLException: " + ex.getMessage());
     }
-    CallableStatement cstmt = conn.prepareCall("{call insertEnroll(?,?,?,?)}");	
+    cstmt = conn.prepareCall("{call insertEnroll(?,?,?,?)}");	
 	cstmt.setString(1, s_num);
 	cstmt.setString(2, c_num);
 	cstmt.setInt(3, c_div);

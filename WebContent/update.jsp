@@ -20,7 +20,6 @@
 	String userNum = session_id;
 	String userPWD = "";
 	String userName = "";
-	int appliedGrade = 0;
 	
 	if(userNum == null){ %>
 		<script>
@@ -40,8 +39,7 @@
 		rs = stmt.executeQuery(sql);
 		if(rs.next()){
 			userPWD = rs.getString(2);
-			appliedGrade = rs.getInt(3);
-			userName = rs.getString(4);
+			userName = rs.getString(3);
 		}
 	} catch(SQLException e){
 		System.err.println("SQLException: " + e.getMessage());
@@ -90,11 +88,6 @@
 			<div align="center"> 
 				<input type="text" name="checkPWD" placeholder="check new password">
 			</div>
-		</td>
-	</tr>
-	<tr>
-		<td><div align="center">신청학점</div></td>
-		<td><div align="center"><%= appliedGrade %></div>
 		</td>
 	</tr>
 	<tr>

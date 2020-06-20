@@ -32,5 +32,19 @@ BEGIN
         RAISE_APPLICATION_ERROR(-20003, '암호에 공란은 입력되지 않습니다.');
 
 END;
+/
 
+CREATE SEQUENCE seq
+START WITH 1
+INCREMENT BY 1;
+/
+
+CREATE OR REPLACE TRIGGER en_num_trigger
+BEFORE INSERT
+ON enroll
+REFERENCING NEW AS NEW
+FOR EACH ROW
+BEGIN
+SELECT auto_seq.nextval INTO :NEW.en_num FROM dual;
+END;
 /

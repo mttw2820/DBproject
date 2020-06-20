@@ -1,14 +1,13 @@
 CREATE TABLE STUDENT (
 	s_num VARCHAR2(15),
 	s_pwd VARCHAR2(30) NOT NULL,
-	s_total_grade NUMBER DEFAULT 0,
 	s_name VARCHAR2(10),
 	CONSTRAINT STUDENT_PK PRIMARY KEY(s_num)
 );
 
-INSERT INTO STUDENT (s_num, s_pwd, s_total_grade, s_name) VALUES ('1111111', '1234', 0, '고은서');
-INSERT INTO STUDENT (s_num, s_pwd, s_total_grade, s_name) VALUES ('1111112', '1235', 0, '이수현');
-INSERT INTO STUDENT (s_num, s_pwd, s_total_grade, s_name) VALUES ('1111113', '1236', 0, '조혜민');
+INSERT INTO STUDENT (s_num, s_pwd, s_name) VALUES ('1111111', '1234', '고은서');
+INSERT INTO STUDENT (s_num, s_pwd, s_name) VALUES ('1111112', '1235', '이수현');
+INSERT INTO STUDENT (s_num, s_pwd, s_name) VALUES ('1111113', '1236', '조혜민');
 
 
 CREATE TABLE CLASS (
@@ -36,8 +35,8 @@ INSERT INTO CLASS VALUES ('M500', '컴퓨터 그래픽스', 3, 3, 3, 2020, 2, 12
 INSERT INTO CLASS VALUES ('M600', '멀티미디어 처리', 3, 3, 3, 2020, 2, 14, 0, 1, 120);
 INSERT INTO CLASS VALUES ('M700', '게임 프로그래밍', 3, 3, 3, 2020, 2, 13, 30, 1, 75);
 
-
 CREATE TABLE ENROLL (
+	en_num NUMBER PRIMARY KEY,
 	en_year NUMBER,
 	en_semester NUMBER,
 	en_sNum VARCHAR2(15),
@@ -46,3 +45,9 @@ CREATE TABLE ENROLL (
 	CONSTRAINT FK_SNUM FOREIGN KEY(en_sNum) REFERENCES STUDENT(s_num),
 	CONSTRAINT FK_CLASS FOREIGN KEY(en_cNum, en_cDiv) REFERENCES CLASS(c_num, c_div)
 );
+
+
+CREATE OR REPLACE VIEW enroll_info AS
+SELECT e.en_sNum sid, c.c_num cid, c.c_title ctitle, c.c_div cdiv, c.c_grade credit, c.c_max_students cmaxnum, c.c_year cyear, c.c_semester csemester, c.c_start_h ctime_h, c.c_start_m ctime_m, c.c_day cday, c.c_lec_time clectime
+FROM enroll e, class c
+WHERE e.en_year = c.c_year and e.en_semester = c.c_semester and e.en_cNum = c.c_num and e.en_cDiv = c.c_div;

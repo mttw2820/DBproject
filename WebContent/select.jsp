@@ -3,6 +3,7 @@
 <html><head><title>수강신청 입력</title></head>
 <body>
 <%@ include file="top.jsp" %>
+<%@ include file = "sqlLoginInfo.jsp" %>
 <%   if (session_id==null) response.sendRedirect("login.jsp");  %>
 
 <table width="75%" align="center" border>
@@ -10,12 +11,16 @@
 <tr><th>과목번호</th><th>분반</th><th>과목명</th><th>강의시간</th>
       <th>인정학점</th></tr>
 <%
-	Connection myConn = null;      Statement stmt = null;	
-	ResultSet myResultSet = null;   String mySQL = "";
-	String dburl  = "jdbc:oracle:thin:@localhost:1521:orcl";
-	String user="db1713941";   String passwd="ss2";
-	String dbdriver = "oracle.jdbc.driver.OracleDriver";   
 	
+	String userNum = "";
+	if((userNum = session_id) == null){ %>
+		<script>
+		alert("로그인 후 이용 가능한 서비스입니다.");
+		location.href("login.jsp");
+		</script>
+	<% }
+	
+
 	String class_num ="";
 	int class_div = 0;
 	String class_name = "";
@@ -25,40 +30,40 @@
 	String class_start = "";
 	String class_end = "";
 	int total_credit = 0;
-	CallableStatement cstmt = null; 
+	
 
 	try {
 		Class.forName("oracle.jdbc.driver.OracleDriver");          
-		myConn =  DriverManager.getConnection (dburl, user, passwd);
-		stmt = myConn.createStatement();		
+		conn =  DriverManager.getConnection(url, user, password);
+		stmt = conn.createStatement();		
 		String dateConSql = "en_year = Date2EnrollYear(SYSDATE) AND en_semester = Date2EnrollSemester(SYSDATE)";
 		String subsql = "SELECT en_cNum FROM enroll WHERE " + dateConSql;
-		mySQL = "SELECT cid, cdiv, ctitle, cday, ctime_h, ctime_m, credit FROM enroll_info WHERE sid ='" + session_id + "' AND cid IN (" + subsql + ") order by cid, cdiv";
-		myResultSet = stmt.executeQuery(mySQL);
-		while (myResultSet.next()) {
-			class_num = myResultSet.getString("cid");
-			class_div = myResultSet.getInt("cdiv");
-			class_name = myResultSet.getString("ctitle");
-			class_grade = myResultSet.getInt("credit");
+		sql = "SELECT cid, cdiv, ctitle, cday, ctime_h, ctime_m, credit FROM enroll_info WHERE sid ='" + session_id + "' AND cid IN (" + subsql + ") order by cid, cdiv";
+		rs = stmt.executeQuery(sql);
+		while (rs.next()) {
+			class_num = rs.getString("cid");
+			class_div = rs.getInt("cdiv");
+			class_name = rs.getString("ctitle");
+			class_grade = rs.getInt("credit");
 			total_credit = total_credit + class_grade;
-			int_class_day = "" + myResultSet.getInt("cday");
+			int_class_day = "" + rs.getInt("cday");
 			String start = null;
 			String end = null;
-			int st = myResultSet.getInt("ctime_h");
+			int st = rs.getInt("ctime_h");
 			start = st + "";
 			if (st == 0)  
 				start = "00";
-			int et = myResultSet.getInt("ctime_m");
+			int et = rs.getInt("ctime_m");
 			end = et + "";
 			if (et == 0)  
 				end = "00";
-			class_start = "" + myResultSet.getInt("ctime_h");
+			class_start = "" + rs.getInt("ctime_h");
 			class_start = class_start + " : " + start;
-			class_end = "" + myResultSet.getInt("ctime_m");
+			class_end = "" + rs.getInt("ctime_m");
 			class_end = class_end + " : " + end;
 			
-			mySQL = "{? = call day_map(?)}";
-			cstmt = myConn.prepareCall(mySQL);
+			sql = "{? = call day_map(?)}";
+			cstmt = conn.prepareCall(sql);
 			cstmt.registerOutParameter(1, java.sql.Types.VARCHAR);
 			cstmt.setString(2, int_class_day);
 			cstmt.execute();
@@ -75,7 +80,7 @@
 	<%
 		}	
 		stmt.close();
-		myConn.close();
+		conn.close();
 	} 
 	catch(SQLException ex) { 
 		System.err.println("SQLException: " + ex.getMessage());
