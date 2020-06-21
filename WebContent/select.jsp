@@ -78,11 +78,14 @@
 		</tr>
 	<%
 		}	
-		stmt.close();
-		conn.close();
 	} 
 	catch(SQLException ex) { 
 		System.err.println("SQLException: " + ex.getMessage());
+	} finally{
+		if(rs != null) rs.close();
+		if(stmt != null) stmt.close();
+		if(cstmt != null) cstmt.close();
+		if(conn != null) conn.close();
 	}
 	%>
 	</tr>

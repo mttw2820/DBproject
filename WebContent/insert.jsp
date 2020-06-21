@@ -19,8 +19,8 @@
    	 	}
 		try{
 			String dateConSql = "en_year = Date2EnrollYear(SYSDATE) AND en_semester = Date2EnrollSemester(SYSDATE)";
-			String subsql = "SELECT en_cNum FROM enroll WHERE en_sNum = '" + session_id + "' AND " + dateConSql;
-			sql = "SELECT c_num,c_div,c_title,c_grade FROM class WHERE c_num NOT IN (" + subsql + ") order by c_num, c_div";
+			String subsql = "SELECT en_cNum, en_cDiv FROM enroll WHERE en_sNum = '" + session_id + "' AND " + dateConSql;
+			sql = "SELECT c_num,c_div,c_title,c_grade FROM class WHERE (c_num, c_div) NOT IN (" + subsql + ") order by c_num, c_div";
 	
 			rs = stmt.executeQuery(sql);
 

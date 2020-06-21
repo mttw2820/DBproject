@@ -90,7 +90,7 @@
 			}
 			if(!checkOriginalPWD){	// 기존 비밀번호 오류 %>
 				<script>
-				alert("학생정보 수정 시 기존 비밀번호가 맞아야합니다.");
+				alert("비밀번호 수정 시 기존 비밀번호가 맞아야합니다.");
 				location.href="update.jsp";
 				</script>
 		<%	}

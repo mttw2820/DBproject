@@ -30,8 +30,8 @@
 			// 조건 1. 학생이 신청한 강의
 			// 조건 2. 올해, 이번학기의 강의
 			String dateConSql = "en_year = Date2EnrollYear(SYSDATE) AND en_semester = Date2EnrollSemester(SYSDATE)";
-			String subsql = "SELECT en_cNum FROM enroll WHERE en_sNum = ? AND " + dateConSql;
-			sql = "SELECT c_num, c_div, c_title, c_grade FROM class WHERE c_num IN (" + subsql + ") order by c_num, c_div";
+			String subsql = "SELECT en_cNum, en_cDiv FROM enroll WHERE en_sNum = ? AND " + dateConSql;
+			sql = "SELECT c_num, c_div, c_title, c_grade FROM class WHERE (c_num, c_div) IN (" + subsql + ") order by c_num, c_div";
 	
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, userNum);
