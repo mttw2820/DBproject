@@ -37,7 +37,7 @@
 		stmt = conn.createStatement();		
 		String dateConSql = "en_year = Date2EnrollYear(SYSDATE) AND en_semester = Date2EnrollSemester(SYSDATE)";
 		String subsql = "SELECT en_cNum FROM enroll WHERE " + dateConSql;
-		sql = "SELECT cid, cdiv, ctitle, cday, ctime_h, ctime_m, credit FROM enroll_info WHERE sid ='" + session_id + "' AND cid IN (" + subsql + ") order by cid, cdiv";
+		sql = "SELECT cid, cdiv, ctitle, cday, ctime_h, ctime_m, credit, clectime FROM enroll_info WHERE sid ='" + session_id + "' AND cid IN (" + subsql + ") order by cid, cdiv";
 		rs = stmt.executeQuery(sql);
 		while (rs.next()) {
 			class_num = rs.getString("cid");
@@ -48,18 +48,19 @@
 			int_class_day = "" + rs.getInt("cday");
 			String start = null;
 			String end = null;
-			int st = rs.getInt("ctime_h");
-			start = st + "";
-			if (st == 0)  
-				start = "00";
-			int et = rs.getInt("ctime_m");
-			end = et + "";
-			if (et == 0)  
+			int sh = rs.getInt("ctime_h");
+			int sm = rs.getInt("ctime_m");
+			start = sm + ""
+			if (sm == 0)
+				start = "00"
+			int eh = (sh * 60 + sm + clectime) / 60
+			int em = (sh * 60 + sm + clectime) % 60
+			if (em == 0)  
 				end = "00";
-			class_start = "" + rs.getInt("ctime_h");
-			class_start = class_start + " : " + start;
-			class_end = "" + rs.getInt("ctime_m");
-			class_end = class_end + " : " + end;
+			class_start = "" + rs.getInt("sh");
+			class_start = class_start + " : " + sm;
+			class_end = "" + rs.getInt("eh");
+			class_end = class_end + " : " + em;
 			
 			sql = "{? = call day_map(?)}";
 			cstmt = conn.prepareCall(sql);
