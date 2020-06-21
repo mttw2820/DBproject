@@ -9,7 +9,14 @@ CREATE TABLE STUDENT (
 INSERT INTO STUDENT (s_num, s_pwd, s_name) VALUES ('1111111', '1234', '고은서');
 INSERT INTO STUDENT (s_num, s_pwd, s_name) VALUES ('1111112', '1235', '이수현');
 INSERT INTO STUDENT (s_num, s_pwd, s_name) VALUES ('1111113', '1236', '조혜민');
-
+INSERT INTO STUDENT (s_num, s_pwd, s_name) VALUES ('1111114', '1114', '이복돌');
+INSERT INTO STUDENT (s_num, s_pwd, s_name) VALUES ('1111115', '1114', '정지훈');
+INSERT INTO STUDENT (s_num, s_pwd, s_name) VALUES ('1111116', '1114', '유재석');
+INSERT INTO STUDENT (s_num, s_pwd, s_name) VALUES ('1111117', '1114', '이효리');
+INSERT INTO STUDENT (s_num, s_pwd, s_name) VALUES ('1111118', '1114', '이복순');
+INSERT INTO STUDENT (s_num, s_pwd, s_name) VALUES ('1111119', '1114', '유연석');
+INSERT INTO STUDENT (s_num, s_pwd, s_name) VALUES ('1111120', '1114', '전미도');
+INSERT INTO STUDENT (s_num, s_pwd, s_name) VALUES ('1111121', '1114', '조정석');
 
 CREATE TABLE CLASS (
 	c_num VARCHAR2(15),
@@ -35,6 +42,16 @@ INSERT INTO CLASS VALUES ('M400', '윈도우즈 프로그래밍', 3, 3, 3, 2020,
 INSERT INTO CLASS VALUES ('M500', '컴퓨터 그래픽스', 3, 3, 3, 2020, 2, 12, 0, 4, 75);
 INSERT INTO CLASS VALUES ('M600', '멀티미디어 처리', 3, 3, 3, 2020, 2, 14, 0, 1, 120);
 INSERT INTO CLASS VALUES ('M700', '게임 프로그래밍', 3, 3, 3, 2020, 2, 13, 30, 1, 75);
+INSERT INTO CLASS VALUES ('C700', '컴파일러', 1, 3, 3, 2020, 2, 9, 0, 3, 75);
+INSERT INTO CLASS VALUES ('C700', '컴파일러', 2, 3, 3, 2020, 2, 9, 0, 5, 75);
+INSERT INTO CLASS VALUES ('C300', '자료구조', 1, 3, 3, 2020, 2, 9, 0, 1, 75);
+INSERT INTO CLASS VALUES ('C300', '자료구조', 2, 3, 3, 2020, 2, 9, 0, 3, 75);
+INSERT INTO CLASS VALUES ('C500', '운영체제', 3, 3, 3, 2020, 2, 12, 0, 2, 75);
+INSERT INTO CLASS VALUES ('C200', '프로그래밍 개론', 1, 3, 3, 2020, 2, 13, 30, 1, 75);
+INSERT INTO CLASS VALUES ('C200', '프로그래밍 개론', 2, 3, 3, 2020, 2, 13, 30, 3, 75);
+INSERT INTO CLASS VALUES ('P100', '교양요가', 3, 3, 3, 2020, 2, 13, 30, 2, 75);
+INSERT INTO CLASS VALUES ('P200', '교양필라테스', 3, 3, 3, 2020, 2, 10, 30, 5, 75);
+INSERT INTO CLASS VALUES ('P300', '교양미술(서양화)', 3, 3, 3, 2020, 2, 15, 0, 4, 75);
 
 CREATE TABLE ENROLL (
 	en_num NUMBER PRIMARY KEY,
