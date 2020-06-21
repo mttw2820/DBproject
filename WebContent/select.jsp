@@ -78,6 +78,7 @@
 		</tr>
 	<%
 		}	
+		rs.close();
 		stmt.close();
 		conn.close();
 	} 
